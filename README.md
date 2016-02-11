@@ -1,6 +1,6 @@
 # Minimal nginx
 
-Sample with alpine base image
+Sample with Alpine Linux as base image. Small container, about 6.7 MB size.
 
 The image will run as `nobody` user instead of `root`.
 
