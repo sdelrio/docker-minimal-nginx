@@ -7,6 +7,9 @@ RUN apk add --update nginx && rm -rf /var/cache/apk/*
 COPY nginx.non-root.conf /etc/nginx/nginx.conf
 COPY index.html /usr/share/nginx/html/index.html
 
+EXPOSE 8080
+VOLUME ["/usr/share/nginx/html"]
+
 # Start nginx without root
 USER nobody
 
