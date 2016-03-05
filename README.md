@@ -35,9 +35,11 @@ Successfully built 792212e8fbc1
 
 ## Runing image
 
-To start image you could use `docker run -td -p 80:8080 minimal-nginx`.
+To start image you could use `docker run -td -p 80:8080 minimal-nginx`. Or if using dockerhub: `docker run -td -p 80:8080 sdelrio/docker-minimal-nginx`.
 
 We can see nginx process is now running with user nobody instead of root.
+
+To change the content of the html to show your current directory html add the parameter `-v $(pwd):/usr/share/nginx/html`.
 
 ```
 $ docker run -td -p 80:8080 minimal-nginx
