@@ -10,7 +10,6 @@ COPY index.html /usr/share/nginx/html/index.html
 EXPOSE 8080
 VOLUME ["/usr/share/nginx/html"]
 
-# Start nginx without root
-USER nobody
-
+# root user will run 'nginx: master process'
+# nobody user will run 'nginx: worker process' as dictated in the nginx.non-root.conf
 CMD ["nginx", "-g", "daemon off;"]
