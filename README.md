@@ -48,8 +48,15 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 $ docker exec evil_yalow ps
 PID   USER     TIME   COMMAND
     1 root       0:00 nginx: master process nginx -g daemon off;
-    5 nobody     0:00 nginx: worker process
-    7 nobody     0:00 ps
+    7 nobody     0:00 nginx: worker process
+    29 root      0:00 ps
+```
+
+To access the container use `sh` rather than the standard `bash`
+
+```
+$ docker exec evil_yalow sh
+/ #
 ```
 
 ## References
