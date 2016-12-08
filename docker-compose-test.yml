@@ -9,6 +9,6 @@ services:
     testconfig:
         image: sdelrio/docker-minimal-nginx
         volumes:
-            - ./nginx.non-root.conf:/etc/nginx/nginx.conf
+            - nginx.non-root.conf:/etc/nginx/nginx.conf
         command: nginx -t
 
