@@ -6,8 +6,8 @@ services:
         build: .
         image: nginx-nonroot
 
-    unit:
-        image: nginx-nonroot
+    testconfig:
+        image: sdelrio/docker-minimal-nginx
         volumes:
             - ./nginx.non-root.conf:/etc/nginx/nginx.conf
         command: nginx -t
