@@ -13,3 +13,4 @@ VOLUME ["/usr/share/nginx/html"]
 # root user will run 'nginx: master process'
 # nobody user will run 'nginx: worker process' as dictated in the nginx.non-root.conf
 CMD ["nginx", "-g", "daemon off;"]
+
