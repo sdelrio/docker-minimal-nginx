@@ -10,3 +10,11 @@ services:
         image: nginx-nonroot
         command: nginx -t
 
+    staging-service:
+        image: nginx-nonroot
+
+    staging-tests:
+        image: appropriate/curl
+        links: [ staging-service ]
+        command: curl -Is -w %{http_code} -o /dev/null http://staging-service:8080/
+
