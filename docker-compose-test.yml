@@ -18,3 +18,7 @@ services:
         links: [ staging-service ]
         command: curl -Is -w %{http_code} -o /dev/null http://staging-service:8080/
 
+    sut:
+        build: .
+        command: nginx -t
+
