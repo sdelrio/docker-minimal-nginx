@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+
+    app:
+        build: .
+        image: nginx-nonroot
+
+    unit:
+        image: nginx-nonroot
+        volumes:
+            - ./nginx.non-root.conf:/etc/nginx/nginx.conf
+        command: nginx -t
+
