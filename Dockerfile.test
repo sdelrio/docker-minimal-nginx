@@ -1,0 +1,11 @@
+FROM alpine:3.4
+
+RUN apk add --update curl nginx bash && rm -rf /var/cache/apk/*
+
+WORKDIR /test
+
+ADD nginx.non-root.conf /etc/nginx/nginx.conf
+ADD test.sh /test/test.sh
+
+CMD ["bash", "test.sh"]
+

@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: nginx-nonroot
+        ports:
+            - "8080:8080"
+
