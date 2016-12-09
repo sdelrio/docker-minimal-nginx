@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
 # Install nginx package and remove cache
 RUN apk add --update nginx && rm -rf /var/cache/apk/*
