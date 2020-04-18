@@ -71,7 +71,7 @@ jobs:
         with:
           image: $IMAGE_ID:$VERSION
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TÖKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           cache: true
           cache_registry: sdelrio/cache
 
