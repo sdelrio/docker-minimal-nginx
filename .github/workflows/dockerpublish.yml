@@ -46,14 +46,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build image
-        run: docker build . --file Dockerfile --tag image
-
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-      - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -72,5 +64,12 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      - name: Kaniko build
+        uses: outillage/kaniko-action@master
+        with:
+          image: $IMAGE_ID:$VERSION
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TÖKEN }}
+          cache: true
+          cache_registry: sdelrio/cache
+
