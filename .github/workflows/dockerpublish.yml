@@ -67,6 +67,8 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           echo $IMAGE_ID:$VERSION > dockertag
+          echo "::set-env name=IMAGE_ID::$IMAGE_ID"
+          echo "::set-env name=VERSION::$VERSION"
 
       - name: Kaniko build
         uses: outillage/kaniko-action@master
