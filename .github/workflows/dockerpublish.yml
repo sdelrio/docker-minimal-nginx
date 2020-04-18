@@ -15,14 +15,13 @@ on:
 
 env:
   IMAGE_NAME: docker-minimal-nginx
+  IMAGE_ID: ""
+  VERSION: ""
 
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
-    env:
-      IMAGE_ID: ""
-      VERSION: ""
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +66,7 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo $IAMGE_ID:$VERSION > dockertag
+          echo $IMAGE_ID:$VERSION > dockertag
 
       - name: Kaniko build
         uses: outillage/kaniko-action@master
