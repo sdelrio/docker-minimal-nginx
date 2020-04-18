@@ -22,7 +22,7 @@ jobs:
   test:
     env:
       IMAGE_ID: ""
-      IMAGE_TAG: ""
+      VERSION: ""
     runs-on: ubuntu-latest
 
     steps:
@@ -67,12 +67,12 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo $IAMGE_ID:$IMAGE_ID > dockertag
+          echo $IAMGE_ID:$VERSION > dockertag
 
       - name: Kaniko build
         uses: outillage/kaniko-action@master
         with:
-          image: $IMAGE_ID:$VERSION
+          image: "${{ env.IMAGE_ID}}:${{ env.VERSION }}"
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           cache: true
