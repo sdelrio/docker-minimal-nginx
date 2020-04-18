@@ -66,7 +66,7 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo $IMAGE_ID:$VERSION > dockertag
+
           echo "::set-env name=IMAGE_ID::$IMAGE_ID"
           echo "::set-env name=VERSION::$VERSION"
 
@@ -76,7 +76,7 @@ jobs:
           image: ${{ env.IMAGE_ID}}
           tag: ${{ env.VERSION }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.githubaction }}
           cache: true
           cache_registry: sdelrio/cache
 
