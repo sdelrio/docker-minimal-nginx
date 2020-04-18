@@ -46,6 +46,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Preparte image name and tags
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
