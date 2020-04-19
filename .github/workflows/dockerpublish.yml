@@ -38,7 +38,7 @@ jobs:
             docker-compose --file docker-compose-test.yml run sut
           else
             docker build . --file Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 \
-              --cache-from type=registry,ref=docker.io/${{ github.actor }}/$IMAGE_NAME
+              --cache-from docker.io/${{ github.actor }}/$IMAGE_NAME
           fi
 
   # Push to GitHub Packages.
@@ -59,7 +59,7 @@ jobs:
       - name: Build image
         run: |
           docker build . --file Dockerfile --tag image --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --cache-from type=registry,ref=docker.io/${{ github.actor }}/$IMAGE_NAME
+            --cache-from docker.io/${{ github.actor }}/$IMAGE_NAME
 
       - name: Push image
         run: |
