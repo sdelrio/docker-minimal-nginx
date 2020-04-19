@@ -19,6 +19,7 @@ env:
   VERSION: ""
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
+  DOCKER_USER: ${{ github.actor }}
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -29,17 +30,23 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
 
       - name: Run tests
         run: |
+          docker-compose --version
           if [ -f docker-compose-test.yml ]; then
-            docker-compose --file docker-compose-test.yml build \
-              --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from docker.io/sdelrio/docker-minimal-nginx
+            docker build . --file Dockerfile --tag nginx-nonroot \
+              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
+            docker build . --file Dockerfile --tag nginx-nonroot-sut \
+              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
+
             docker-compose --file docker-compose-test.yml run sut
           else
-            docker build . --file Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 \
-              --cache-from docker.io/${{ github.actor }}/$IMAGE_NAME
+            docker build . --file Dockerfile \
+              --build-arg BUILDKIT_INLINE_CACHE=1 \
+              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
           fi
 
   # Push to GitHub Packages.
@@ -60,7 +67,7 @@ jobs:
       - name: Build image
         run: |
           docker build . --file Dockerfile --tag image --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --cache-from docker.io/${{ github.actor }}/$IMAGE_NAME
+            --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
 
       - name: Push image
         run: |
