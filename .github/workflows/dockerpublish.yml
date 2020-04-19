@@ -28,13 +28,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Run tests
         run: |
           if [ -f docker-compose-test.yml ]; then
             docker-compose --file docker-compose-test.yml build
             docker-compose --file docker-compose-test.yml run sut
           else
-            docker build . --file Dockerfile
+            docker build . --file Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 \
+              --cache-from type=registry,ref=docker.io/${{ github.actor }}/$IMAGE_NAME
           fi
 
   # Push to GitHub Packages.
@@ -49,11 +53,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build image
-        run: docker build . --file Dockerfile --tag image
-
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: |
+          docker build . --file Dockerfile --tag image --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --cache-from type=registry,ref=docker.io/${{ github.actor }}/$IMAGE_NAME
 
       - name: Push image
         run: |
