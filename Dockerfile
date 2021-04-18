@@ -5,6 +5,9 @@ RUN apk add --update nginx && rm -rf /var/cache/apk/*
 
 # Copy basic files
 COPY nginx.non-root.conf /etc/nginx/nginx.conf
+RUN nginx -t
+
+# Copy root page
 COPY index.html /usr/share/nginx/html/index.html
 
 EXPOSE 8080
