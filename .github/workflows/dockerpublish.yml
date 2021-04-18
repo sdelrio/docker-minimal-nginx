@@ -36,18 +36,7 @@ jobs:
       - name: Run tests
         run: |
           docker-compose --version
-          if [ -f docker-compose-test.yml ]; then
-            docker build . --file Dockerfile --tag nginx-nonroot \
-              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
-            docker build . --file Dockerfile --tag nginx-nonroot-sut \
-              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
-
-            docker-compose --file docker-compose-test.yml run sut
-          else
-            docker build . --file Dockerfile \
-              --build-arg BUILDKIT_INLINE_CACHE=1 \
-              --cache-from docker.io/$DOCKER_USER/$IMAGE_NAME
-          fi
+          make test
 
   # Push to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/

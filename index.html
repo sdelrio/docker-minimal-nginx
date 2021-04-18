@@ -1,15 +1,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
+  <head>
     <title>Nginx with Alpine Linux</title>
-    <h1>Nginx with Alpine Linux</h1>
-    <h3>Small container</h3>
+    <style>
+    body {
+        margin: 0px;
+        font: 20px 'RobotoRegular', Arial, sans-serif;
+        font-weight: 100;
+        height: 100%;
+        color: #0f1419;
+    }
+    div.info {
+        display: table;
+        background: #e8eaec;
+        padding: 20px 20px 20px 20px;
+        border: 1px dashed black;
+        border-radius: 10px;
+        margin: 0px auto auto auto;
+    }
+    div.smaller p span {
+        color: #3D5266;
+    }
+    h1, h2 {
+        font-weight: 100;
+    }
+    div.check {
+        padding: 0px 0px 0px 0px;
+        display: table;
+        margin: 36px auto auto auto;
+        font: 12px 'RobotoRegular', Arial, sans-serif;
+    }
+    #center {
+        width: 400px;
+        margin: 0 auto;
+        font: 12px Courier;
+    }
+    </style>
+    <script>
+        var ref;
+        function checkRefresh() {
+            if (document.cookie == "refresh=1") {
+                document.getElementById("check").checked = true;
+                ref = setTimeout(function(){location.reload();}, 1000);
+            } else {
+            }
+        }
+        function changeCookie() {
+            if (document.getElementById("check").checked) {
+                document.cookie = "refresh=1";
+                ref = setTimeout(function(){location.reload();}, 1000);
+            } else {
+                document.cookie = "refresh=0";
+                clearTimeout(ref);
+            }
+        }
+    </script>
+  </head>
 
-    About 6.7 MB of nginx image.
+<body onload="checkRefresh();">
 
-<pre>
-$ docker images
-REPOSITORY             TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
-minimal-nginx          latest              62813806088b        About a minute ago   6.723 MB
-</pre>
+<div id="center"><h1>Nginx with Alpine Linux</h1></div>
 
+<div class="info">
+    <p><span>Server name:</span> <span>server_hostname</span></p>
+    <p><span>Server address:</span> <span>server_address</span></p>
+    <p class="smaller"><span>User Agent:</span> <span>client_browser</span></p>
+    <p class="smaller"><span>URI:</span> <span>server_url</span></p>
+    <p class="smaller"><span>Doc Root:</span> <span>document_root</span></p>
+    <p class="smaller"><span>Date:</span> <span>server_date</span></p>
+    <p class="smaller"><span>NGINX Frontend Load Balancer IP:</span> <span>remote_addr</span></p>
+    <p class="smaller"><span>Client IP:</span> <span>proxied_for_ip</span></p>
+    <p class="smaller"><span>NGINX Version:</span> <span>nginx_version</span></p>
+</div>
+
+<div class="check">
+    <input type="checkbox" id="check" onchange="changeCookie()"> Auto Refresh</input>
+</div>
+
+<body>
 </html>
